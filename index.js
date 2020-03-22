@@ -7,10 +7,19 @@
 const { getInput, setOutput, setFailed } = require('@actions/core');
 const { GitHub, context } = require('@actions/github');
 
+const getInputBool = (name, defaultValue = false) => {
+    const param = getInput(name);
+    if (param === 'true' || param === '1') {
+        return true
+    } else if (param === 'false' || param === '0') {
+        return false
+    } else return defaultValue
+};
+
 async function main() {
     const token = getInput('github-token', { required: true });
     const sha = getInput('sha');
-    const filterOutClosed = getInput('filterOutClosed');
+    const filterOutClosed = getInputBool('filterOutClosed');
 
     const result = await new GitHub(token, {}).repos.listPullRequestsAssociatedWithCommit({
         owner: context.repo.owner,
