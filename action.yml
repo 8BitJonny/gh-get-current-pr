@@ -1,0 +1,22 @@
+name: Find Current Open Pull Request
+author: 8BitJonny
+description: Find a PR associated with the current commit.
+inputs:
+  github-token:
+    description: The GitHub token used to create an authenticated client.
+    required: true
+  sha:
+    description: Sha to get PR for.  Defaults to current sha.
+    required: false
+  filterOutClosed:
+    description: Sha to get PR for.  Defaults to current sha.
+    required: false
+outputs:
+  pr:
+    description: The whole PR object if one was found.
+runs:
+  using: node12
+  main: 'index.js'
+branding:
+  icon: github
+  color: green

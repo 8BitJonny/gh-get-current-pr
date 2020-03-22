@@ -1,0 +1,28 @@
+{
+  "name": "actiongetcurrentpr",
+  "version": "1.0.0",
+  "description": "Github Action for getting the current PR if the commit belongs to one",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/8BitJonny/gh-get-current-pr.git"
+  },
+  "keywords": [
+    "Github",
+    "Action",
+    "Javascript"
+  ],
+  "author": "8BitJonny",
+  "license": "SEE LICENSE IN LICENSE file",
+  "bugs": {
+    "url": "https://github.com/8BitJonny/gh-get-current-pr/issues"
+  },
+  "homepage": "https://github.com/8BitJonny/gh-get-current-pr#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "@actions/github": "^2.1.1"
+  }
+}
