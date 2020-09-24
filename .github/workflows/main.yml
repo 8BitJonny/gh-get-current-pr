@@ -1,7 +1,7 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  test_job:
     runs-on: ubuntu-latest
     name: Returns the PR number
     steps:

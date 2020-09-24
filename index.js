@@ -33,7 +33,7 @@ async function main() {
         pr = pr.state === 'open' && pr
     }
 
-    setOutput('number', pr && pr.number || '');
+    setOutput('number', pr && pr.number.toString() || '');
     setOutput('pr', pr ? JSON.stringify(pr) : '');
 }
 
