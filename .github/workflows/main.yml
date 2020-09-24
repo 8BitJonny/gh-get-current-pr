@@ -7,10 +7,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Find PR
+      - name: Get PR
         uses: ./
-        id: findPR
+        id: getPR
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Get the pr number
-        run: echo "The PR was ${{ steps.findPR.outputs.pr }}"
+        run: echo "The PR was ${{ steps.getPR.outputs.number }}"
