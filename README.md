@@ -23,5 +23,5 @@ information but not when your trigger event is `push`. This action enables to ge
       env:
         prNumber: ${{ steps.PR.outputs.number }}
         // JSON object with the full PR object
-        prJSON: ${{ steps.PR.outputs.pr }
+        prJSON: ${{ steps.PR.outputs.pr }}
 ```
