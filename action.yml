@@ -14,6 +14,18 @@ inputs:
 outputs:
   pr:
     description: The whole PR object if one was found.
+  number:
+    description: The PR number if one was found.
+  pr_title:
+    description: The PR Title if one was found.
+  pr_url:
+    description: The PR Url if one was found.
+  pr_created_at:
+    description: The PR Created timestamp if one was found.
+  pr_merged_at:
+    description: The PR Merged timestamp if one was found.
+  pr_closed_at:
+    description: The PR Closed timestamp if one was found.
 runs:
   using: node12
   main: 'index.js'
