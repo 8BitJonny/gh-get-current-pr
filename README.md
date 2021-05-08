@@ -16,12 +16,12 @@ information but not when your trigger event is `push`. This action enables to ge
       id: PR
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        // Only return if PR is still open
+        # Only return if PR is still open
         filterOutClosed: true
     - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
       if: success() && steps.PR.outputs.number
       env:
         prNumber: ${{ steps.PR.outputs.number }}
-        // JSON object with the full PR object
+        # JSON object with the full PR object
         prJSON: ${{ steps.PR.outputs.pr }}
 ```
