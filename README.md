@@ -12,7 +12,7 @@ information but not when your trigger event is `push`. This action enables to ge
 ```
   steps:
     - uses: actions/checkout@v1
-    - uses: 8BitJonny/gh-get-current-pr@v1
+    - uses: 8BitJonny/gh-get-current-pr@v1.0.1
       id: PR
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
