@@ -36,7 +36,7 @@ async function main() {
     setOutput('number', pr && pr.number.toString() || '');
     setOutput('pr', pr ? JSON.stringify(pr) : '');
     setOutput('pr_title', pr ? pr.title : '');
-    setOutput('pr_number', pr ? pr.number : '');
+    setOutput('pr_number', pr ? pr.number.toString() : '');
     setOutput('pr_url', pr ? pr.html_url : '');
     setOutput('pr_created_at', pr ? pr.created_at : '');
     setOutput('pr_merged_at', pr ? pr.merged_at : '');
