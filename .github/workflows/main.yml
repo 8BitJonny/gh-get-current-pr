@@ -12,5 +12,11 @@ jobs:
         id: getPR
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get the pr number
-        run: echo "The PR was ${{ steps.getPR.outputs.number }}"
+      - name: Display PR properties
+        run: |
+          echo "The PR Number is ${{ steps.getPR.outputs.number }}"
+          echo "The PR Title is ${{ steps.getPR.outputs.pr_title }}"
+          echo "The PR Url is ${{ steps.getPR.outputs.pr_url }}"
+          echo "The PR Created_At is ${{ steps.getPR.outputs.created_at }}"
+          echo "The PR Merged_At is ${{ steps.getPR.outputs.merged_at }}"
+          echo "The PR Closed_At is ${{ steps.getPR.outputs.closed_at }}"
