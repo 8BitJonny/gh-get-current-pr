@@ -33,14 +33,14 @@ async function main() {
         pr = pr.state === 'open' && pr
     }
 
-    setOutput('number', pr?.number.toString() ?? '');
+    setOutput('number', pr && pr.number.toString() || '');
     setOutput('pr', pr ? JSON.stringify(pr) : '');
-    setOutput('pr_title', pr?.title ?? '');
-    setOutput('pr_number', pr?.number.toString() ?? '');
-    setOutput('pr_url', pr?.html_url ?? '');
-    setOutput('pr_created_at', pr?.created_at ?? '');
-    setOutput('pr_merged_at', pr?.merged_at ?? '');
-    setOutput('pr_closed_at', null?.closed_at ?? '');
+    setOutput('pr_title', pr ? pr.title : '');
+    setOutput('pr_number', pr ? pr.number.toString() : '');
+    setOutput('pr_url', pr ? pr.html_url : '');
+    setOutput('pr_created_at', pr ? pr.created_at : '');
+    setOutput('pr_merged_at', pr ? pr.merged_at : '');
+    setOutput('pr_closed_at', pr ? pr.closed_at : '');
 }
 
 main().catch(err => setFailed(err.message));
