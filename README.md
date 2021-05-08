@@ -25,3 +25,6 @@ information but not when your trigger event is `push`. This action enables to ge
         # JSON object with the full PR object
         prJSON: ${{ steps.PR.outputs.pr }}
 ```
+
+## :computer: Contributing
+Contributions are always welcome!
