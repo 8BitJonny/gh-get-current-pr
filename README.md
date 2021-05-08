@@ -24,6 +24,12 @@ information but not when your trigger event is `push`. This action enables to ge
         prNumber: ${{ steps.PR.outputs.number }}
         # JSON object with the full PR object
         prJSON: ${{ steps.PR.outputs.pr }}
+        # Direct access to common PR properties
+        prUrl: ${{ steps.PR.outputs.pr_url }}
+        prTitle: ${{ steps.PR.outputs.pr_title }}
+        prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
+        prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
+        prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
 ```
 
 ## :computer: Contributing
