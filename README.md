@@ -35,5 +35,3 @@ This action enables you to get the PR no matter which event type triggered the w
 
 ## :computer: Contributing
 Contributions are always welcome!
-
-## Test Commit
