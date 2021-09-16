@@ -20,3 +20,6 @@ jobs:
           echo "The PR Created_At is ${{ steps.getPR.outputs.pr_created_at }}"
           echo "The PR Merged_At is ${{ steps.getPR.outputs.pr_merged_at }}"
           echo "The PR Closed_At is ${{ steps.getPR.outputs.pr_closed_at }}"
+          echo "DEBUG INFO SHA: ${{ steps.getPR.outputs.sha }}"
+          echo "DEBUG INFO CONTEXT SHA: ${{ steps.getPR.outputs.context_sha }}"
+          echo "DEBUG INFO PR Num 2: ${{ steps.getPR.outputs.number2 }}"
