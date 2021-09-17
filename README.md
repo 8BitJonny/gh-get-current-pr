@@ -17,6 +17,8 @@ This action enables you to get the PR no matter which event type triggered the w
       id: PR
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        # Verbose setting SHA when using Pull_Request event trigger to fix #16
+        sha: ${{ github.event.pull_request.head.sha }}
         # Only return if PR is still open
         filterOutClosed: true
     - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
@@ -33,7 +35,7 @@ This action enables you to get the PR no matter which event type triggered the w
         prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
 ```
 
-### :warning: Pull_request trigger
+### Pull_request trigger
 If you use the `pull_request` event trigger, it won't find the assosiated PR for the first commit inside that same PR out of the box.
 
 This [article](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout) describes why this is, in detail.
