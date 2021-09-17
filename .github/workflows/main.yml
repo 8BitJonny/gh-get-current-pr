@@ -1,4 +1,4 @@
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test_job:
@@ -7,11 +7,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Git Log
+        run: |
+          echo "$(git log -n 5)"
       - name: Get PR
         uses: ./
         id: getPR
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: ${{ github.event.pull_request.head.sha }}
       - name: Display PR properties
         run: |
           echo "The PR Number is ${{ steps.getPR.outputs.number }}"
@@ -20,3 +26,6 @@ jobs:
           echo "The PR Created_At is ${{ steps.getPR.outputs.pr_created_at }}"
           echo "The PR Merged_At is ${{ steps.getPR.outputs.pr_merged_at }}"
           echo "The PR Closed_At is ${{ steps.getPR.outputs.pr_closed_at }}"
+
+          echo "DEBUG INFO SHA: ${{ steps.getPR.outputs.sha }}"
+          echo "DEBUG INFO CONTEXT SHA: ${{ steps.getPR.outputs.context_sha }}"
