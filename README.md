@@ -30,6 +30,7 @@ This action enables you to get the PR no matter which event type triggered the w
         # Direct access to common PR properties
         prUrl: ${{ steps.PR.outputs.pr_url }}
         prTitle: ${{ steps.PR.outputs.pr_title }}
+        prBody: ${{ steps.PR.outputs.pr_body }}
         prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
         prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
         prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
