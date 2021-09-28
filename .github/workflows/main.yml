@@ -16,6 +16,7 @@ jobs:
         run: |
           echo "The PR Number is ${{ steps.getPR.outputs.number }}"
           echo "The PR Title is ${{ steps.getPR.outputs.pr_title }}"
+          echo "The PR Body is ${{ steps.getPR.outputs.pr_body }}"
           echo "The PR Url is ${{ steps.getPR.outputs.pr_url }}"
           echo "The PR Created_At is ${{ steps.getPR.outputs.pr_created_at }}"
           echo "The PR Merged_At is ${{ steps.getPR.outputs.pr_merged_at }}"
