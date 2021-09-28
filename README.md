@@ -13,7 +13,7 @@ This action enables you to get the PR no matter which event type triggered the w
 ```
   steps:
     - uses: actions/checkout@v1
-    - uses: 8BitJonny/gh-get-current-pr@1.1.0
+    - uses: 8BitJonny/gh-get-current-pr@1.2.0
       id: PR
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
