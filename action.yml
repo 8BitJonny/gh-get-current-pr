@@ -18,6 +18,8 @@ outputs:
     description: The PR number if one was found.
   pr_title:
     description: The PR Title if one was found.
+  pr_body:
+    description: The PR Body if one was found.
   pr_url:
     description: The PR Url if one was found.
   pr_created_at:
