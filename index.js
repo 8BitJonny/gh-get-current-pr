@@ -29,7 +29,7 @@ async function main() {
 
     const pullRequests = result.data.filter((pullRequest) => pullRequest.state === 'open' || !filterOutClosed);
 
-    let pr = pullRequests[0] ?? [];
+    let pr = pullRequests.length > 0 && pullRequests[0];
     pullRequests.forEach(pullRequest => pullRequest.head.sha.startsWith(sha) && (pr = pullRequest));
 
     setOutput('number', pr && pr.number.toString() || '');
