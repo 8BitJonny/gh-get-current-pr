@@ -18,20 +18,19 @@ const getInputBool = (name, defaultValue = false) => {
 
 async function main() {
     const token = getInput('github-token', { required: true });
-    const sha = getInput('sha');
+    const sha = getInput('sha') || context.sha;
     const filterOutClosed = getInputBool('filterOutClosed');
 
     const result = await new GitHub(token, {}).repos.listPullRequestsAssociatedWithCommit({
         owner: context.repo.owner,
         repo: context.repo.repo,
-        commit_sha: sha || context.sha,
+        commit_sha: sha,
     });
 
-    let pr = result.data.length > 0 && result.data[0];
+    const pullRequests = result.data.filter((pullRequest) => pullRequest.state === 'open' || !filterOutClosed);
 
-    if (filterOutClosed === true) {
-        pr = pr.state === 'open' && pr
-    }
+    let pr = pullRequests[0] ?? [];
+    pullRequests.forEach(pullRequest => pullRequest.head.sha.startsWith(sha) && (pr = pullRequest));
 
     setOutput('number', pr && pr.number.toString() || '');
     setOutput('pr', pr ? JSON.stringify(pr) : '');
