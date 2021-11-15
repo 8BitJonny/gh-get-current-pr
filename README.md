@@ -1,6 +1,6 @@
 # Github Action: Get current PR
 
-Simple Github Action for checking if the current commit belongs to a pull request and returning the full PR object if that is the case
+Test Simple Github Action for checking if the current commit belongs to a pull request and returning the full PR object if that is the case
 
 ## :thinking: Why?
 
