@@ -34,10 +34,11 @@ This action enables you to get the PR no matter which event type triggered the w
         prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
         prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
         prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
+        prLabel: ${{ steps.PR.outputs.pr_labels }}
 ```
 
 ### Pull_request trigger
-If you use the `pull_request` event trigger, it won't find the assosiated PR for the first commit inside that same PR out of the box.
+If you use the `pull_request` event trigger, it won't find the associated PR for the first commit inside that same PR out of the box.
 
 This [article](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout) describes why this is, in detail.
 A short form of the article's explanation is, that Github creates an extra merge commit before the `pull_request` event is triggered for which this action can't find an assosiated PR. The `pull_request` trigger for the second PR commit and all following, will again work as expected.

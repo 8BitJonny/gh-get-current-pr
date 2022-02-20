@@ -40,6 +40,7 @@ async function main() {
     setOutput('pr_created_at', pr ? pr.created_at : '');
     setOutput('pr_merged_at', pr ? pr.merged_at : '');
     setOutput('pr_closed_at', pr ? pr.closed_at : '');
+    setOutput('pr_labels', pr ? pr.labels.map(e => e.name).join(",") : '');
 }
 
 main().catch(err => setFailed(err.message));

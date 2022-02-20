@@ -21,3 +21,4 @@ jobs:
           echo "The PR Created_At is ${{ steps.getPR.outputs.pr_created_at }}"
           echo "The PR Merged_At is ${{ steps.getPR.outputs.pr_merged_at }}"
           echo "The PR Closed_At is ${{ steps.getPR.outputs.pr_closed_at }}"
+          echo "The PR Labels are ${{ steps.getPR.outputs.pr_labels }}"
