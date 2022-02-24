@@ -28,6 +28,8 @@ outputs:
     description: The PR Merged timestamp if one was found.
   pr_closed_at:
     description: The PR Closed timestamp if one was found.
+  pr_labels:
+    description: The PR Labels if any was found.
 runs:
   using: node12
   main: 'index.js'
