@@ -31,8 +31,8 @@ outputs:
   pr_labels:
     description: The PR Labels if any was found.
 runs:
-  using: node12
-  main: 'index.js'
+  using: node16
+  main: 'dist/index.js'
 branding:
   icon: git-pull-request
   color: green
