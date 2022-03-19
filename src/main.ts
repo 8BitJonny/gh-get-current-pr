@@ -1,35 +1,23 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import getInputAsBoolean from './get-input-as-boolean'
-import getPrAssociatedWithCommit from './get-pr-associated-with-commit'
+import getInputs from './io/get-inputs'
+import getLastPullRequest from './get-last-pr'
+import getPRsAssociatedWithCommit from './get-prs-associated-with-commit'
+import setOutput from './io/set-output'
 
 async function main(): Promise<void> {
   try {
-    const token = core.getInput('github-token', {required: true})
-    const sha = core.getInput('sha') || github.context.sha
-    const filterOutClosed = getInputAsBoolean('filterOutClosed')
+    const {token, sha, filterOutClosed} = getInputs()
 
     const octokit = github.getOctokit(token)
-    const result = await getPrAssociatedWithCommit(octokit, github.context, sha)
+    const allPRs = await getPRsAssociatedWithCommit(octokit, sha)
 
-    const pullRequests = result.data.filter(
-      pullRequest => pullRequest.state === 'open' || !filterOutClosed
-    )
+    const pr = getLastPullRequest(allPRs, {
+      mustBeOpen: filterOutClosed,
+      preferWithHeadSha: sha
+    })
 
-    let pr = pullRequests.length > 0 && pullRequests[0]
-    for (const pullRequest of pullRequests) {
-      pullRequest.head.sha.startsWith(sha) && (pr = pullRequest)
-    }
-
-    core.setOutput('number', (pr && pr.number.toString()) || '')
-    core.setOutput('pr', pr ? JSON.stringify(pr) : '')
-    core.setOutput('pr_title', pr ? pr.title : '')
-    core.setOutput('pr_body', pr ? pr.body : '')
-    core.setOutput('pr_url', pr ? pr.html_url : '')
-    core.setOutput('pr_created_at', pr ? pr.created_at : '')
-    core.setOutput('pr_merged_at', pr ? pr.merged_at : '')
-    core.setOutput('pr_closed_at', pr ? pr.closed_at : '')
-    core.setOutput('pr_labels', pr ? pr.labels.map(e => e.name).join(',') : '')
+    setOutput(pr)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
