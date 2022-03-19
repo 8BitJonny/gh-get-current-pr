@@ -1,5 +1,5 @@
 name: 'build-test'
-on: # rebuild any PRs and main branch changes
+on:
   pull_request:
   push:
 
@@ -12,10 +12,23 @@ jobs:
           npm install
       - run: |
           npm run all
-  test: # make sure the action works on a clean machine without building
+  clean-run: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+  test-if-closed-pr-is-found: # make sure the action works on a clean machine without building
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Action
+        uses: ./
+        id: pr
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
+      - name: Assert PR properties
+        run: |
+          [[ ${{ steps.pr.outputs.number }} == 5 ]] || (echo "PR miss match"; exit 1)
