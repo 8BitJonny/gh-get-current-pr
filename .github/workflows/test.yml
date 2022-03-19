@@ -19,7 +19,7 @@ jobs:
       - uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-  test-if-closed-pr-is-found: # make sure the action works on a clean machine without building
+  test-if-closed-pr-is-found:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,3 +32,17 @@ jobs:
       - name: Assert PR properties
         run: |
           [[ ${{ steps.pr.outputs.number }} == 5 ]] || (echo "PR miss match"; exit 1)
+  test-if-closed-pr-is-not-found:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Action
+        uses: ./
+        id: pr
+        with:
+          filterOutClosed: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
+      - name: Assert PR properties
+        run: |
+          [[ ${{ steps.pr.outputs.number }} == '' ]] || (echo "PR falsely found"; exit 1)
