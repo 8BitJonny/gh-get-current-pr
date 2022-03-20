@@ -17,7 +17,7 @@ export default function getLastPullRequest(
   pullRequests: PR[],
   options: Options
 ): PR | null {
-  options = {...options, ...Defaults}
+  options = {...Defaults, ...options}
   const filteredPRs = pullRequests.filter(
     pullRequest => pullRequest.state === 'open' || !options.mustBeOpen
   )
