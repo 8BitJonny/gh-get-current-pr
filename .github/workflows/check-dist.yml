@@ -19,40 +19,18 @@ on:
 jobs:
   check-dist:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
-      - uses: actions/upload-artifact@v2
+      - id: dist
+        env:
+          BUILD_HASH: ${{ hashFiles('dist') }}
+        run: echo "::set-output name=hash::$BUILD_HASH"
+      - run: npm install
+      - run: npm run all
+      - name: Test Action package is up to date
+        uses: pr-mpt/actions-assert@v3
         with:
-          name: distPreBuild
-          path: dist/
-
-      - name: Set Node.js 16.x
-        uses: actions/setup-node@v2.5.1
-        with:
-          node-version: 16.x
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Rebuild the dist/ directory
-        run: |
-          npm run build
-          npm run package
-
-      - name: Compare the expected and actual dist/ directories
-        run: |
-          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
-            echo "Detected uncommitted changes after build.  See status below:"
-            git diff --text
-            exit 1
-          fi
-        id: diff
-
-      # If index.js was different then expected, upload the expected version as an artifact
-      - uses: actions/upload-artifact@v2
-        if: ${{ failure() && steps.diff.conclusion == 'failure' }}
-        with:
-          name: dist
-          path: dist/
+          assertion: npm://@assertions/is-equal:v1
+          expected: "${{ steps.dist.outputs.hash }}"
+          actual: "${{ hashFiles('dist') }}"
+          error-message: "Action package (`dist`) is not up to date with latest changes, please run `npm run all`"
