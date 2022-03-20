@@ -40,12 +40,12 @@ jobs:
         run: |
           if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
             echo "Detected uncommitted changes after build.  See status below:"
-            git diff
+            git diff --text
             exit 1
           fi
         id: diff
 
-      # If index.js was different than expected, upload the expected version as an artifact
+      # If index.js was different then expected, upload the expected version as an artifact
       - uses: actions/upload-artifact@v2
         if: ${{ failure() && steps.diff.conclusion == 'failure' }}
         with:
