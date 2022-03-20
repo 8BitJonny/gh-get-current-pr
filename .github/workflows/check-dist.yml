@@ -3,20 +3,24 @@
 # `index.js` is the code that will run.
 # For our project, we generate this file through a build process from other source files.
 # We need to make sure the checked-in `index.js` actually matches what we expect it to be.
-name: Check dist/
+name: Check dist
 
 on:
   push:
+    branches:
+      - master
     paths-ignore:
       - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
 
 jobs:
   check-dist:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 5
       - name: Set Node.js 16.x
         uses: actions/setup-node@v2.5.1
         with:
@@ -25,20 +29,12 @@ jobs:
         run: npm ci
       - name: Rebuild the dist/ directory
         run: |
-          ls -la
-          ls -la dist
-          git diff --ignore-space-at-eol dist/ | wc -l
-          git status
           npm run build
           npm run package
       - name: Compare the expected and actual dist/ directories
         run: |
           if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
             echo "Detected uncommitted changes after build.  See status below:"
-            ls -la
-            ls -la dist
-            git config -l
-            git log --oneline -5
             git diff --text
             exit 1
           fi
