@@ -1,7 +1,13 @@
 name: 'build-test'
+
 on:
-  pull_request:
   push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
 
 jobs:
   build: # make sure build/ci work properly
