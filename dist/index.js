@@ -1,7 +1,89 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8432:
+/***/ 6835:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const Defaults = {
+    mustBeOpen: false
+};
+function findByHeadSha(pullRequests, sha) {
+    return pullRequests.find(pullRequest => pullRequest.head.sha.startsWith(sha));
+}
+function getLastPullRequest(pullRequests, options) {
+    options = Object.assign(Object.assign({}, options), Defaults);
+    const filteredPRs = pullRequests.filter(pullRequest => pullRequest.state === 'open' || !options.mustBeOpen);
+    if (filteredPRs.length === 0)
+        return null;
+    const defaultChoice = pullRequests[0];
+    const preferredChoice = options.preferWithHeadSha !== undefined
+        ? findByHeadSha(pullRequests, options.preferWithHeadSha)
+        : null;
+    return preferredChoice || defaultChoice;
+}
+exports.default = getLastPullRequest;
+
+
+/***/ }),
+
+/***/ 3845:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const github = __importStar(__nccwpck_require__(5438));
+function getPullRequestsAssociatedWithCommits(octokit, sha) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield octokit.rest.repos.listPullRequestsAssociatedWithCommit({
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
+            commit_sha: sha
+        });
+        return result.data;
+    });
+}
+exports.default = getPullRequestsAssociatedWithCommits;
+
+
+/***/ }),
+
+/***/ 8635:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -24,31 +106,104 @@ exports.default = getInputBool;
 
 /***/ }),
 
-/***/ 9649:
-/***/ (function(__unused_webpack_module, exports) {
+/***/ 7930:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-function getPullRequestsAssociatedWithCommits(octokit, context, sha) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return octokit.rest.repos.listPullRequestsAssociatedWithCommit({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            commit_sha: sha
-        });
-    });
+const core = __importStar(__nccwpck_require__(2186));
+const github = __importStar(__nccwpck_require__(5438));
+const get_input_as_boolean_1 = __importDefault(__nccwpck_require__(8635));
+function getInputs() {
+    const token = core.getInput('github-token', { required: true });
+    const sha = core.getInput('sha') || github.context.sha;
+    const filterOutClosed = (0, get_input_as_boolean_1.default)('filterOutClosed');
+    return {
+        token,
+        sha,
+        filterOutClosed
+    };
 }
-exports.default = getPullRequestsAssociatedWithCommits;
+exports.default = getInputs;
+
+
+/***/ }),
+
+/***/ 3741:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__nccwpck_require__(2186));
+function setOutputWithDebug(key, value) {
+    core.debug(`Setting output: key: "${key}", value: "${value}"`);
+    core.setOutput(key, value);
+}
+function setOutput(pr) {
+    if (pr) {
+        setOutputWithDebug('number', pr.number.toString());
+        setOutputWithDebug('pr', JSON.stringify(pr));
+        setOutputWithDebug('pr_title', pr.title);
+        setOutputWithDebug('pr_body', pr.body);
+        setOutputWithDebug('pr_url', pr.html_url);
+        setOutputWithDebug('pr_created_at', pr.created_at);
+        setOutputWithDebug('pr_merged_at', pr.merged_at);
+        setOutputWithDebug('pr_closed_at', pr.closed_at);
+        setOutputWithDebug('pr_labels', pr.labels.map(e => e.name).join(','));
+    }
+}
+exports.default = setOutput;
 
 
 /***/ }),
@@ -96,30 +251,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-const get_input_as_boolean_1 = __importDefault(__nccwpck_require__(8432));
-const get_pr_associated_with_commit_1 = __importDefault(__nccwpck_require__(9649));
+const get_inputs_1 = __importDefault(__nccwpck_require__(7930));
+const get_last_pr_1 = __importDefault(__nccwpck_require__(6835));
+const get_prs_associated_with_commit_1 = __importDefault(__nccwpck_require__(3845));
+const set_output_1 = __importDefault(__nccwpck_require__(3741));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const token = core.getInput('github-token', { required: true });
-            const sha = core.getInput('sha') || github.context.sha;
-            const filterOutClosed = (0, get_input_as_boolean_1.default)('filterOutClosed');
+            const { token, sha, filterOutClosed } = (0, get_inputs_1.default)();
             const octokit = github.getOctokit(token);
-            const result = yield (0, get_pr_associated_with_commit_1.default)(octokit, github.context, sha);
-            const pullRequests = result.data.filter(pullRequest => pullRequest.state === 'open' || !filterOutClosed);
-            let pr = pullRequests.length > 0 && pullRequests[0];
-            for (const pullRequest of pullRequests) {
-                pullRequest.head.sha.startsWith(sha) && (pr = pullRequest);
-            }
-            core.setOutput('number', (pr && pr.number.toString()) || '');
-            core.setOutput('pr', pr ? JSON.stringify(pr) : '');
-            core.setOutput('pr_title', pr ? pr.title : '');
-            core.setOutput('pr_body', pr ? pr.body : '');
-            core.setOutput('pr_url', pr ? pr.html_url : '');
-            core.setOutput('pr_created_at', pr ? pr.created_at : '');
-            core.setOutput('pr_merged_at', pr ? pr.merged_at : '');
-            core.setOutput('pr_closed_at', pr ? pr.closed_at : '');
-            core.setOutput('pr_labels', pr ? pr.labels.map(e => e.name).join(',') : '');
+            const allPRs = yield (0, get_prs_associated_with_commit_1.default)(octokit, sha);
+            const pr = (0, get_last_pr_1.default)(allPRs, {
+                mustBeOpen: filterOutClosed,
+                preferWithHeadSha: sha
+            });
+            (0, set_output_1.default)(pr);
         }
         catch (error) {
             if (error instanceof Error)
