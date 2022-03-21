@@ -1,6 +1,13 @@
+<p align="left">
+<img height="30px" src="https://forthebadge.com/images/badges/built-with-love.svg">
+<img height="30px" src="https://github.com/8BitJonny/8BitJonny/blob/master/worksOnMyMachine.svg">
+<a href="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml"><img src="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml/badge.svg" alt="Build and Test Status"></a>
+</p>
+
+
 # Github Action: Get current PR
 
-Simple Github Action for checking if the current commit belongs to a pull request and returning the full PR object if that is the case
+Github Action for checking if the current commit belongs to a pull request and returning the full PR object if that is the case
 
 ## :thinking: Why?
 
