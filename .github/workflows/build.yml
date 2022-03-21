@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          npm install
+          npm ci
       - run: |
           npm run build
   clean-run: # make sure the action works on a clean machine without building
@@ -29,6 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: |
+          npm ci
       - name: Lint
         run: |
           npm run format-check
