@@ -1,7 +1,10 @@
 <p align="left">
 <img height="30px" src="https://forthebadge.com/images/badges/built-with-love.svg">
 <img height="30px" src="https://github.com/8BitJonny/8BitJonny/blob/master/worksOnMyMachine.svg">
-<a href="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml"><img src="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml/badge.svg" alt="Build and Test Status"></a>
+<a href="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml"><img src="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml/badge.svg" alt="Build and Test Status"></a><a href="https://github.com/8BitJonny/gh-get-current-pr/blob/master/package.json" alt="Version">
+        <img src="https://img.shields.io/github/package-json/v/8BitJonny/gh-get-current-pr.svg" /></a>
+<a href="https://github.com/8BitJonny/gh-get-current-pr/blob/master/LICENSE.md" alt="License">
+        <img src="https://img.shields.io/github/license/8BitJonny/gh-get-current-pr.svg" /></a>
 </p>
 
 
