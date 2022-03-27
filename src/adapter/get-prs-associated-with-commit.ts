@@ -1,6 +1,6 @@
 import * as github from '@actions/github'
 import {GitHub} from '@actions/github/lib/utils'
-import {PR} from './types/pull-request'
+import {PR} from '../types/pull-request'
 
 export default async function getPullRequestsAssociatedWithCommits(
   octokit: InstanceType<typeof GitHub>,
