@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "../.eslintrc.json"
+  ],
+  "rules": {
+    "filenames/match-regex": "off",
+    "@typescript-eslint/ban-ts-comment": "off"
+  }
+}

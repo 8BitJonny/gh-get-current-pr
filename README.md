@@ -1,6 +1,23 @@
+<p align="left">
+  <img height="30px" src="https://forthebadge.com/images/badges/built-with-love.svg">
+  <img height="30px" src="https://github.com/8BitJonny/8BitJonny/blob/master/worksOnMyMachine.svg">
+  <a href="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/build.yml">
+    <img src="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/build.yml/badge.svg" alt="Build Status">
+  </a>
+  <a href="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml">
+    <img src="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml/badge.svg" alt="Test Status">
+  </a>
+  <a href="https://github.com/8BitJonny/gh-get-current-pr/blob/master/package.json" alt="Version">
+    <img src="https://img.shields.io/github/package-json/v/8BitJonny/gh-get-current-pr.svg" />
+  </a>
+  <a href="https://github.com/8BitJonny/gh-get-current-pr/blob/master/LICENSE.md" alt="License">
+    <img src="https://img.shields.io/github/license/8BitJonny/gh-get-current-pr.svg" />
+  </a>
+</p>
+
 # Github Action: Get current PR
 
-Simple Github Action for checking if the current commit belongs to a pull request and returning the full PR object if that is the case
+Github Action for checking if the current commit belongs to a pull request and returning the full PR object if that is the case
 
 ## :thinking: Why?
 
@@ -13,7 +30,7 @@ This action enables you to get the PR no matter which event type triggered the w
 ```
   steps:
     - uses: actions/checkout@v1
-    - uses: 8BitJonny/gh-get-current-pr@1.4.0
+    - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -21,6 +38,8 @@ This action enables you to get the PR no matter which event type triggered the w
         sha: ${{ github.event.pull_request.head.sha }}
         # Only return if PR is still open
         filterOutClosed: true
+        # Only return if PR is not in draft state
+        filterOutDraft: 1
     - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
       if: success() && steps.PR.outputs.number
       env:

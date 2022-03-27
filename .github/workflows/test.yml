@@ -1,0 +1,68 @@
+name: 'test'
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - run: npm ci
+      - run: |
+          npm test
+  test-if-closed-pr-is-found:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - run: npm ci
+      - name: Build Action
+        run: |
+          npm run build
+          npm run package
+      - name: Run Action
+        uses: ./
+        id: pr
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
+      - name: Assert PR properties
+        run: |
+          [[ ${{ steps.pr.outputs.number }} == 5 ]] || (echo "PR miss match"; exit 1)
+  test-if-closed-pr-is-not-found-when-filtering-closed-prs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - run: npm ci
+      - name: Build Action
+        run: |
+          npm run build
+          npm run package
+      - name: Run Action
+        uses: ./
+        id: pr
+        with:
+          filterOutClosed: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
+      - name: Assert PR properties
+        run: |
+          [[ '${{ steps.pr.outputs.number }}' == '' ]] || (echo "PR falsely found"; exit 1)
