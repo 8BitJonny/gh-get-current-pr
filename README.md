@@ -38,6 +38,8 @@ This action enables you to get the PR no matter which event type triggered the w
         sha: ${{ github.event.pull_request.head.sha }}
         # Only return if PR is still open
         filterOutClosed: true
+        # Only return if PR is not in draft state
+        filterOutDraft: 1
     - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
       if: success() && steps.PR.outputs.number
       env:
