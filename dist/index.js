@@ -1,35 +1,7 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 6835:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const Defaults = {
-    mustBeOpen: false
-};
-function findByHeadSha(pullRequests, sha) {
-    return pullRequests.find(pullRequest => pullRequest.head.sha.startsWith(sha));
-}
-function getLastPullRequest(pullRequests, options) {
-    options = Object.assign(Object.assign({}, Defaults), options);
-    const filteredPRs = pullRequests.filter(pullRequest => pullRequest.state === 'open' || !options.mustBeOpen);
-    if (filteredPRs.length === 0)
-        return null;
-    const defaultChoice = pullRequests[0];
-    const preferredChoice = options.preferWithHeadSha !== undefined
-        ? findByHeadSha(pullRequests, options.preferWithHeadSha)
-        : null;
-    return preferredChoice || defaultChoice;
-}
-exports.default = getLastPullRequest;
-
-
-/***/ }),
-
-/***/ 3845:
+/***/ 5890:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -79,6 +51,34 @@ function getPullRequestsAssociatedWithCommits(octokit, sha) {
     });
 }
 exports.default = getPullRequestsAssociatedWithCommits;
+
+
+/***/ }),
+
+/***/ 6835:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const Defaults = {
+    mustBeOpen: false
+};
+function findByHeadSha(pullRequests, sha) {
+    return pullRequests.find(pullRequest => pullRequest.head.sha.startsWith(sha));
+}
+function getLastPullRequest(pullRequests, options) {
+    options = Object.assign(Object.assign({}, Defaults), options);
+    const filteredPRs = pullRequests.filter(pullRequest => pullRequest.state === 'open' || !options.mustBeOpen);
+    if (filteredPRs.length === 0)
+        return null;
+    const defaultChoice = pullRequests[0];
+    const preferredChoice = options.preferWithHeadSha !== undefined
+        ? findByHeadSha(pullRequests, options.preferWithHeadSha)
+        : null;
+    return preferredChoice || defaultChoice;
+}
+exports.default = getLastPullRequest;
 
 
 /***/ }),
@@ -253,7 +253,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const get_inputs_1 = __importDefault(__nccwpck_require__(7930));
 const get_last_pr_1 = __importDefault(__nccwpck_require__(6835));
-const get_prs_associated_with_commit_1 = __importDefault(__nccwpck_require__(3845));
+const get_prs_associated_with_commit_1 = __importDefault(__nccwpck_require__(5890));
 const set_output_1 = __importDefault(__nccwpck_require__(3741));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
