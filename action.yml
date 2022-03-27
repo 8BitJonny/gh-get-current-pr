@@ -6,10 +6,13 @@ inputs:
     description: The GitHub token used to create an authenticated client.
     required: true
   sha:
-    description: Sha to get PR for.  Defaults to current sha.
+    description: Sha to get PR for. Defaults to current sha.
     required: false
   filterOutClosed:
-    description: True, False, 1 or 0 if only open PRs should be returned
+    description: True, False, 1 or 0 if only open PRs should be returned. Defaults to false.
+    required: false
+  filterOutDraft:
+    description: True, False, 1 or 0 if only non-draft PRs should be returned. Defaults to false.
     required: false
 outputs:
   pr:

@@ -62,14 +62,17 @@ exports.default = getPullRequestsAssociatedWithCommits;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const Defaults = {
-    mustBeOpen: false
+    draft: true,
+    closed: true
 };
 function findByHeadSha(pullRequests, sha) {
     return pullRequests.find(pullRequest => pullRequest.head.sha.startsWith(sha));
 }
 function getLastPullRequest(pullRequests, options) {
     options = Object.assign(Object.assign({}, Defaults), options);
-    const filteredPRs = pullRequests.filter(pullRequest => pullRequest.state === 'open' || !options.mustBeOpen);
+    const filteredPRs = pullRequests
+        .filter(({ state }) => state === 'open' || !!options.closed)
+        .filter(({ draft }) => !draft || !!options.draft);
     if (filteredPRs.length === 0)
         return null;
     const defaultChoice = pullRequests[0];
@@ -144,10 +147,12 @@ const get_input_as_boolean_1 = __importDefault(__nccwpck_require__(8635));
 function getInputs() {
     const token = core.getInput('github-token', { required: true });
     const sha = core.getInput('sha') || github.context.sha;
+    const filterOutDraft = (0, get_input_as_boolean_1.default)('filterOutDraft');
     const filterOutClosed = (0, get_input_as_boolean_1.default)('filterOutClosed');
     return {
         token,
         sha,
+        filterOutDraft,
         filterOutClosed
     };
 }
@@ -258,11 +263,12 @@ const set_output_1 = __importDefault(__nccwpck_require__(3741));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { token, sha, filterOutClosed } = (0, get_inputs_1.default)();
+            const { token, sha, filterOutClosed, filterOutDraft } = (0, get_inputs_1.default)();
             const octokit = github.getOctokit(token);
             const allPRs = yield (0, get_prs_associated_with_commit_1.default)(octokit, sha);
             const pr = (0, get_last_pr_1.default)(allPRs, {
-                mustBeOpen: filterOutClosed,
+                draft: !filterOutDraft,
+                closed: !filterOutClosed,
                 preferWithHeadSha: sha
             });
             (0, set_output_1.default)(pr);

@@ -1,10 +1,16 @@
 import {PR} from '../src/types/pull-request'
 
-export default function createDummyPR(id: number, sha: string): PR {
+interface Options {
+  sha?: string
+  draft?: boolean
+}
+
+export default function createDummyPR(id: number, options: Options): PR {
   return Object.assign({} as PR, {
     id,
+    draft: options.draft || false,
     head: {
-      sha
+      sha: options.sha || ''
     }
   })
 }

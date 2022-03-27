@@ -7,13 +7,14 @@ import setOutput from './io/set-output'
 
 async function main(): Promise<void> {
   try {
-    const {token, sha, filterOutClosed} = getInputs()
+    const {token, sha, filterOutClosed, filterOutDraft} = getInputs()
 
     const octokit = github.getOctokit(token)
     const allPRs = await getPRsAssociatedWithCommit(octokit, sha)
 
     const pr = getLastPullRequest(allPRs, {
-      mustBeOpen: filterOutClosed,
+      draft: !filterOutDraft,
+      closed: !filterOutClosed,
       preferWithHeadSha: sha
     })
 

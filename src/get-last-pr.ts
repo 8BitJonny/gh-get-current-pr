@@ -1,12 +1,14 @@
 import {PR} from './types/pull-request'
 
 interface Options {
-  mustBeOpen?: boolean
+  draft?: boolean
+  closed?: boolean
   preferWithHeadSha?: string
 }
 
 const Defaults: Options = {
-  mustBeOpen: false
+  draft: true,
+  closed: true
 }
 
 function findByHeadSha(pullRequests: PR[], sha: string): PR | undefined {
@@ -18,9 +20,10 @@ export default function getLastPullRequest(
   options: Options
 ): PR | null {
   options = {...Defaults, ...options}
-  const filteredPRs = pullRequests.filter(
-    pullRequest => pullRequest.state === 'open' || !options.mustBeOpen
-  )
+
+  const filteredPRs = pullRequests
+    .filter(({state}) => state === 'open' || !!options.closed)
+    .filter(({draft}) => !draft || !!options.draft)
 
   if (filteredPRs.length === 0) return null
 
