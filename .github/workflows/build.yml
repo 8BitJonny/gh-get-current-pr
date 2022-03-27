@@ -28,7 +28,7 @@ jobs:
       - uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-  lint: # make sure the action works on a clean machine without building
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
