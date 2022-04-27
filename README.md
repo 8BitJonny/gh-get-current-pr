@@ -8,7 +8,7 @@
     <img src="https://github.com/8BitJonny/gh-get-current-pr/actions/workflows/test.yml/badge.svg" alt="Test Status">
   </a>
   <a href="https://github.com/8BitJonny/gh-get-current-pr/blob/master/package.json" alt="Version">
-    <img src="https://img.shields.io/github/package-json/v/8BitJonny/gh-get-current-pr.svg" />
+    <img src="https://img.shields.io/github/v/release/8BitJonny/gh-get-current-pr.svg?display_name=tag&sort=semver" />
   </a>
   <a href="https://github.com/8BitJonny/gh-get-current-pr/blob/master/LICENSE.md" alt="License">
     <img src="https://img.shields.io/github/license/8BitJonny/gh-get-current-pr.svg" />
