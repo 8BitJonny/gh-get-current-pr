@@ -74,6 +74,19 @@ See [action.yml](action.yml) for more details.
         prLabel: ${{ steps.PR.outputs.pr_labels }}
 ```
 
+### JSON output
+See [GitHub Documentation](https://docs.github.com/en/rest/commits/commits#list-pull-requests-associated-with-a-commit) for JSON details.
+```yml
+  steps:
+    - uses: 8BitJonny/gh-get-current-pr@2.0.0
+      id: PR
+
+    - name: "Pull Request #${{ steps.PR.outputs.number }}"
+      run: |
+        echo "from ${{ fromJSON(steps.PR.outputs.pr).head.ref }}"
+        echo "to ${{ fromJSON(steps.PR.outputs.pr).base.ref }}"
+```
+
 ### Pull_request trigger
 If you use the `pull_request` event trigger, it won't find the associated PR for the first commit inside that same PR out of the box.
 
