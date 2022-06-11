@@ -4,7 +4,8 @@ description: Get the PR associated with the current commit.
 inputs:
   github-token:
     description: The GitHub token used to create an authenticated client.
-    required: true
+    required: false
+    default: ${{ github.token }}
   sha:
     description: Sha to get PR for. Defaults to current sha.
     required: false
