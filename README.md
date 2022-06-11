@@ -34,6 +34,44 @@ This action enables you to get the PR no matter which event type triggered the w
     - run: echo "Your PR is ${{ steps.PR.outputs.number }} and its JSON is ${{ steps.PR.outputs.pr }}"
 ```
 
+### Inputs
+See [action.yml](action.yml) for more details.
+```
+    - uses: 8BitJonny/gh-get-current-pr@2.0.0
+      id: PR
+      with:
+        # Authetication token to access GitHub APIs. (Can be omitted by default.)
+        github-token: ${{ github.token }}
+        # Verbose setting SHA when using Pull_Request event trigger to fix #16. (For push even trigger this is not necessary.)
+        sha: ${{ github.event.pull_request.head.sha }}
+        # Only return if PR is still open. (By default it returns PRs in any state.)
+        filterOutClosed: true
+        # Only return if PR is not in draft state. (By default it returns PRs in any state.)
+        filterOutDraft: true
+```
+
+### Outputs
+See [action.yml](action.yml) for more details.
+```
+  steps:
+    - uses: 8BitJonny/gh-get-current-pr@2.0.0
+      id: PR
+    - run: "PR #${ prNumber } ${ prTitle } at ${ prUrl } is ${ prJSON }"
+      if: steps.PR.outcome == 'success'
+      env:
+        # JSON object with the full PR object
+        prJSON: ${{ steps.PR.outputs.pr }}
+        # Direct access to common PR properties
+        prNumber: ${{ steps.PR.outputs.number }}
+        prUrl: ${{ steps.PR.outputs.pr_url }}
+        prTitle: ${{ steps.PR.outputs.pr_title }}
+        prBody: ${{ steps.PR.outputs.pr_body }}
+        prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
+        prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
+        prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
+        prLabel: ${{ steps.PR.outputs.pr_labels }}
+```
+
 ### Pull_request trigger
 If you use the `pull_request` event trigger, it won't find the associated PR for the first commit inside that same PR out of the box.
 
