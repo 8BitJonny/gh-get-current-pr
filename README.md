@@ -32,7 +32,7 @@ This action enables you to get the PR no matter which event type triggered the w
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
 
-    - run: echo "Your PR is ${{ steps.PR.outputs.number }} and its JSON is ${{ steps.PR.outputs.pr }}"
+    - run: echo "Your PR number is ${{ steps.PR.outputs.number }} and its JSON is ${{ steps.PR.outputs.pr }}"
 ```
 
 ### Inputs
@@ -58,7 +58,7 @@ See [action.yml](action.yml) for more details.
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
 
-    - run: "PR #${ prNumber } ${ prTitle } at ${ prUrl } is ${ prJSON }"
+    - run: echo "PR \#${ prNumber } ${ prTitle } at ${ prUrl } is ${ prJSON }"
       if: steps.PR.outcome == 'success'
       env:
         # JSON object with the full PR object
@@ -96,7 +96,7 @@ A short form of the article's explanation is, that Github creates an extra merge
 #### Workaround
 To always find and pass the correct commit SHA to this action use this workflow config:
 ```yml
-      - uses: 8BitJonny/gh-get-current-pr@master
+      - uses: 8BitJonny/gh-get-current-pr@2.0.0
         with:
           sha: ${{ github.event.pull_request.head.sha }}
 ```
