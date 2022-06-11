@@ -31,6 +31,7 @@ This action enables you to get the PR no matter which event type triggered the w
   steps:
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
+
     - run: echo "Your PR is ${{ steps.PR.outputs.number }} and its JSON is ${{ steps.PR.outputs.pr }}"
 ```
 
@@ -56,6 +57,7 @@ See [action.yml](action.yml) for more details.
   steps:
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
+
     - run: "PR #${ prNumber } ${ prTitle } at ${ prUrl } is ${ prJSON }"
       if: steps.PR.outcome == 'success'
       env:
