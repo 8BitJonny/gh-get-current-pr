@@ -64,7 +64,7 @@ A short form of the article's explanation is, that Github creates an extra merge
 #### Workaround
 To always find and pass the correct commit SHA to this action use this workflow config:
 ```
-- uses: 8BitJonny/gh-get-current-pr@master
+      - uses: 8BitJonny/gh-get-current-pr@master
         with:
           sha: ${{ github.event.pull_request.head.sha }}
 ```
