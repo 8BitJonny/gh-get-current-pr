@@ -27,7 +27,7 @@ This action enables you to get the PR no matter which event type triggered the w
 
 ## :keyboard: Usage
 
-```
+```yml
   steps:
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
@@ -36,7 +36,7 @@ This action enables you to get the PR no matter which event type triggered the w
 
 ### Inputs
 See [action.yml](action.yml) for more details.
-```
+```yml
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
       with:
@@ -52,7 +52,7 @@ See [action.yml](action.yml) for more details.
 
 ### Outputs
 See [action.yml](action.yml) for more details.
-```
+```yml
   steps:
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
@@ -80,7 +80,7 @@ A short form of the article's explanation is, that Github creates an extra merge
 
 #### Workaround
 To always find and pass the correct commit SHA to this action use this workflow config:
-```
+```yml
       - uses: 8BitJonny/gh-get-current-pr@master
         with:
           sha: ${{ github.event.pull_request.head.sha }}
