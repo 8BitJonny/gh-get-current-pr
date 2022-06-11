@@ -58,11 +58,12 @@ See [action.yml](action.yml) for more details.
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
 
-    - run: echo "PR \#${ prNumber } ${ prTitle } at ${ prUrl } is ${ prJSON }"
+    - run: echo "PR ${prNumber} ${prTitle} at ${prUrl} is ${prJSON}"
       if: steps.PR.outcome == 'success'
       env:
         # JSON object with the full PR object
-        prJSON: ${{ steps.PR.outputs.pr }}
+        # toJSON(fromJSON(...pr)) parses it into memory and then format is with pretty-print.
+        prJSON: ${{ toJSON(fromJSON(steps.current_pr.outputs.pr)) }}
         # Direct access to common PR properties
         prNumber: ${{ steps.PR.outputs.number }}
         prUrl: ${{ steps.PR.outputs.pr_url }}
@@ -75,13 +76,14 @@ See [action.yml](action.yml) for more details.
 ```
 
 ### JSON output
-See [GitHub Documentation](https://docs.github.com/en/rest/commits/commits#list-pull-requests-associated-with-a-commit) for JSON details.
+Useful when the information you're looking for is not exported as a direct output of the action. Simply parse the `pr` output as JSON and navigate the object.
+See [GitHub Documentation](https://docs.github.com/en/rest/commits/commits#list-pull-requests-associated-with-a-commit) for details how the object looks like.
 ```yml
   steps:
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
 
-    - name: "Pull Request #${{ steps.PR.outputs.number }}"
+    - name: "Pull Request ${{ steps.PR.outputs.number }}"
       run: |
         echo "from ${{ fromJSON(steps.PR.outputs.pr).head.ref }}"
         echo "to ${{ fromJSON(steps.PR.outputs.pr).base.ref }}"
