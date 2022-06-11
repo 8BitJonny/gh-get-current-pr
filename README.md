@@ -31,28 +31,7 @@ This action enables you to get the PR no matter which event type triggered the w
   steps:
     - uses: 8BitJonny/gh-get-current-pr@2.0.0
       id: PR
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        # Verbose setting SHA when using Pull_Request event trigger to fix #16
-        sha: ${{ github.event.pull_request.head.sha }}
-        # Only return if PR is still open
-        filterOutClosed: true
-        # Only return if PR is not in draft state
-        filterOutDraft: 1
-    - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
-      if: success() && steps.PR.outputs.number
-      env:
-        prNumber: ${{ steps.PR.outputs.number }}
-        # JSON object with the full PR object
-        prJSON: ${{ steps.PR.outputs.pr }}
-        # Direct access to common PR properties
-        prUrl: ${{ steps.PR.outputs.pr_url }}
-        prTitle: ${{ steps.PR.outputs.pr_title }}
-        prBody: ${{ steps.PR.outputs.pr_body }}
-        prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
-        prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
-        prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
-        prLabel: ${{ steps.PR.outputs.pr_labels }}
+    - run: echo "Your PR is ${{ steps.PR.outputs.number }} and its JSON is ${{ steps.PR.outputs.pr }}"
 ```
 
 ### Pull_request trigger
