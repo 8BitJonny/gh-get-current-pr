@@ -101,6 +101,7 @@ To always find and pass the correct commit SHA to this action use this workflow 
 ```yml
     steps:
       - uses: 8BitJonny/gh-get-current-pr@2.0.0
+        id: PR
         with:
           sha: ${{ github.event.pull_request.head.sha }}
 ```
