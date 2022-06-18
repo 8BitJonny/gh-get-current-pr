@@ -27,33 +27,67 @@ This action enables you to get the PR no matter which event type triggered the w
 
 ## :keyboard: Usage
 
+```yml
+    steps:
+      - uses: 8BitJonny/gh-get-current-pr@2.0.0
+        id: PR
+
+      - run: echo "Your PR number is ${{ steps.PR.outputs.number }} and its JSON is ${{ steps.PR.outputs.pr }}"
 ```
-  steps:
-    - uses: actions/checkout@v1
-    - uses: 8BitJonny/gh-get-current-pr@2.0.0
-      id: PR
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        # Verbose setting SHA when using Pull_Request event trigger to fix #16
-        sha: ${{ github.event.pull_request.head.sha }}
-        # Only return if PR is still open
-        filterOutClosed: true
-        # Only return if PR is not in draft state
-        filterOutDraft: 1
-    - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
-      if: success() && steps.PR.outputs.number
-      env:
-        prNumber: ${{ steps.PR.outputs.number }}
-        # JSON object with the full PR object
-        prJSON: ${{ steps.PR.outputs.pr }}
-        # Direct access to common PR properties
-        prUrl: ${{ steps.PR.outputs.pr_url }}
-        prTitle: ${{ steps.PR.outputs.pr_title }}
-        prBody: ${{ steps.PR.outputs.pr_body }}
-        prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
-        prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
-        prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
-        prLabel: ${{ steps.PR.outputs.pr_labels }}
+
+### Inputs
+See [action.yml](action.yml) for more details.
+```yml
+    steps:
+      - uses: 8BitJonny/gh-get-current-pr@2.0.0
+        id: PR
+        with:
+          # Authetication token to access GitHub APIs. (Can be omitted by default.)
+          github-token: ${{ github.token }}
+          # Verbose setting SHA when using Pull_Request event trigger to fix #16. (For push even trigger this is not necessary.)
+          sha: ${{ github.event.pull_request.head.sha }}
+          # Only return if PR is still open. (By default it returns PRs in any state.)
+          filterOutClosed: true
+          # Only return if PR is not in draft state. (By default it returns PRs in any state.)
+          filterOutDraft: true
+```
+
+### Outputs
+See [action.yml](action.yml) for more details.
+```yml
+    steps:
+      - uses: 8BitJonny/gh-get-current-pr@2.0.0
+        id: PR
+
+      - run: echo "PR ${prNumber} ${prTitle} at ${prUrl} is ${prJSON}"
+        if: steps.PR.outcome == 'success'
+        env:
+          # JSON object with the full PR object
+          # toJSON(fromJSON(...pr)) parses it into memory and then format is with pretty-print.
+          prJSON: ${{ toJSON(fromJSON(steps.current_pr.outputs.pr)) }}
+          # Direct access to common PR properties
+          prNumber: ${{ steps.PR.outputs.number }}
+          prUrl: ${{ steps.PR.outputs.pr_url }}
+          prTitle: ${{ steps.PR.outputs.pr_title }}
+          prBody: ${{ steps.PR.outputs.pr_body }}
+          prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
+          prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
+          prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
+          prLabel: ${{ steps.PR.outputs.pr_labels }}
+```
+
+### JSON output
+Useful when the information you're looking for is not exported as a direct output of the action. Simply parse the `pr` output as JSON and navigate the object.
+See [GitHub Documentation](https://docs.github.com/en/rest/commits/commits#list-pull-requests-associated-with-a-commit) for details how the object looks like.
+```yml
+    steps:
+      - uses: 8BitJonny/gh-get-current-pr@2.0.0
+        id: PR
+
+      - name: "Pull Request ${{ steps.PR.outputs.number }}"
+        run: |
+          echo "from ${{ fromJSON(steps.PR.outputs.pr).head.ref }}"
+          echo "to ${{ fromJSON(steps.PR.outputs.pr).base.ref }}"
 ```
 
 ### Pull_request trigger
@@ -64,8 +98,10 @@ A short form of the article's explanation is, that Github creates an extra merge
 
 #### Workaround
 To always find and pass the correct commit SHA to this action use this workflow config:
-```
-- uses: 8BitJonny/gh-get-current-pr@master
+```yml
+    steps:
+      - uses: 8BitJonny/gh-get-current-pr@2.0.0
+        id: PR
         with:
           sha: ${{ github.event.pull_request.head.sha }}
 ```
