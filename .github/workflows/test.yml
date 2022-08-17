@@ -87,5 +87,5 @@ jobs:
           [[ '${{ steps.pr.outputs.number }}' == '119' ]] || (echo "PR miss match"; exit 1)
       - name: Information
         run: |
-          echo Base PR URL: ${{ steps.pr.outputs.pr_url }}
-          echo Based On PR Title: ${{ steps.pr.outputs.pr_title }}
+          echo "Base PR URL: ${{ steps.pr.outputs.pr_url }}"
+          echo "Based On PR Title: ${{ steps.pr.outputs.pr_title }}"
