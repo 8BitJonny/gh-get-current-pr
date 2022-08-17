@@ -30,7 +30,7 @@ test('find a draft PRs', () => {
 })
 
 test('handle special characters in title', () => {
-  const testPRs = [createDummyPR(11, {title: 'Some (Title): %12*/\ {}'})]
+  const testPRs = [createDummyPR(11, {title: 'Some (Title): %12*/ {}'})]
 
   const foundPR = getLastPullRequest(testPRs, {}) || {id: null}
   expect(foundPR.id).toBe(testPRs[0].id)
