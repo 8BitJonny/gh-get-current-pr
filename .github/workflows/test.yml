@@ -83,7 +83,6 @@ jobs:
         uses: ./
         id: pr
         with:
-          filterOutClosed: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           sha: "6fc264eb6e17f2ab90ab843c157ed76500921f94"
       - name: Assert PR properties
