@@ -40,6 +40,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const github = __importStar(__nccwpck_require__(5438));
+const core = __importStar(__nccwpck_require__(2186));
 function getPullRequestsAssociatedWithCommits(octokit, sha) {
     return __awaiter(this, void 0, void 0, function* () {
         const result = yield octokit.rest.repos.listPullRequestsAssociatedWithCommit({
@@ -47,6 +48,7 @@ function getPullRequestsAssociatedWithCommits(octokit, sha) {
             repo: github.context.repo.repo,
             commit_sha: sha
         });
+        core.debug(`Used url to fetch associated PRs: ${result.url}`);
         return result.data;
     });
 }
