@@ -84,7 +84,7 @@ jobs:
           sha: "9cd0c1144e8525f77c23ab9ad8e50d1cf1b0bd1d"
       - name: Assert PR properties
         run: |
-          [[ '${{ steps.pr.outputs.number }}' == '118' ]] || (echo "PR miss match"; exit 1)
+          [[ '${{ steps.pr.outputs.number }}' == '119' ]] || (echo "PR miss match"; exit 1)
       - name: Information
         run: |
           echo Base PR URL: ${{ steps.pr.outputs.pr_url }}
