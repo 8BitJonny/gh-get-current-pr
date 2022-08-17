@@ -81,7 +81,7 @@ jobs:
         id: pr
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          sha: "6fc264eb6e17f2ab90ab843c157ed76500921f94"
+          sha: "9cd0c1144e8525f77c23ab9ad8e50d1cf1b0bd1d"
       - name: Assert PR properties
         run: |
           [[ '${{ steps.pr.outputs.number }}' == '118' ]] || (echo "PR miss match"; exit 1)
