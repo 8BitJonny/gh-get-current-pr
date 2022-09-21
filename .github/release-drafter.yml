@@ -3,11 +3,12 @@ tag-template: 'v$RESOLVED_VERSION'
 categories:
     - title: '🚀 New'
       labels:
-          - '✏️ Feature'
+          - '🚀 Feature'
     - title: '🧹 Updates'
       labels:
           - '🧹 Updates'
           - '🤖 Dependencies'
+          - 'dependencies'
     - title: '🐛 Fixes'
       labels:
           - '☢️ Bug'
@@ -23,18 +24,21 @@ version-resolver:
     minor:
         labels:
             - 'minor'
-            - '✏️ Feature'
+            - '🚀 Feature'
     patch:
         labels:
             - 'patch'
             - '📒 Documentation'
             - '☢️ Bug'
             - '🤖 Dependencies'
+            - 'dependencies'
             - '🧹 Updates'
     default: patch
 autolabeler:
     - label: '📒 Documentation'
-      title:
+      files:
+          - '*.md'
+      branch:
           - '/docs/i'
           - '/doc:/i'
           - '/\[doc\]/i'
@@ -46,7 +50,7 @@ autolabeler:
           - '/📝/i'
           - '/documentation/i'
     - label: '☢️ Bug'
-      title:
+      branch:
           - '/fix/i'
           - '/race/i'
           - '/bug/i'
@@ -57,7 +61,7 @@ autolabeler:
           - '/🩹/i'
           - '/🚨/i'
     - label: '🧹 Updates'
-      title:
+      branch:
           - '/improve/i'
           - '/update/i'
           - '/refactor/i'
@@ -73,13 +77,13 @@ autolabeler:
           - '/🧪/i'
           - '/🧹/i'
     - label: '🤖 Dependencies'
-      title:
+      branch:
           - '/bumb/i'
           - '/dependencies/i'
           - '/📦/i'
           - '/🤖/i'
-    - label: '✏️ Feature'
-      title:
+    - label: '🚀 Feature'
+      branch:
           - '/feature/i'
           - '/create/i'
           - '/implement/i'
@@ -87,6 +91,8 @@ autolabeler:
           - '/🚀/i'
           - '/✨/i'
           - '/🔥/i'
+exclude-contributors:
+    - '8BitJonny'
 template: |
     $CHANGES
 
