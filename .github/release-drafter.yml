@@ -91,11 +91,9 @@ autolabeler:
           - '/🚀/i'
           - '/✨/i'
           - '/🔥/i'
-exclude-contributors:
-    - '8BitJonny'
 template: |
     $CHANGES
 
     **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
 
-    Thank you $CONTRIBUTORS for making this update possible.
+    Contributors: $CONTRIBUTORS
