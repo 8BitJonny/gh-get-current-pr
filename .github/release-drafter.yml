@@ -7,14 +7,17 @@ categories:
     - title: '🧹 Updates'
       labels:
           - '🧹 Updates'
-          - '🤖 Dependencies'
-          - 'dependencies'
     - title: '🐛 Fixes'
       labels:
           - '☢️ Bug'
     - title: '📚 Documentation'
       labels:
           - '📒 Documentation'
+    - title: '🤖 Dependency Updates'
+      collapse-after: 10
+      labels:
+          - '🤖 Dependency Updates'
+          - 'dependencies'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
@@ -96,4 +99,4 @@ template: |
 
     **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
 
-    Contributors: $CONTRIBUTORS
+    **Contributors**: $CONTRIBUTORS
