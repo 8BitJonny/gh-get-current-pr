@@ -13,8 +13,8 @@ jobs:
     - uses: khan/pull-request-comment-trigger@v1.1.0
       id: check
       with:
-        trigger: '@rebuild'
-        reaction: +1
+        trigger: '!build'
+        reaction: '+1'
       env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
     - uses: actions/checkout@v3
