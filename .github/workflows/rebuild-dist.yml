@@ -31,8 +31,7 @@ jobs:
 
     - name: Check for changes
       run: |
-        git add -N .
-        if git diff --exit-code; then
+        if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
           echo "changes_exist=false" >> $GITHUB_ENV
         else
           echo "changes_exist=true" >> $GITHUB_ENV
