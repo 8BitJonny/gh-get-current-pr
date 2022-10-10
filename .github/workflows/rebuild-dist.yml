@@ -1,0 +1,43 @@
+name: Rebuild Dist
+
+on:
+  pull_request:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: khan/pull-request-comment-trigger@v1.1.0
+      id: check
+      with:
+        trigger: '@rebuild'
+        reaction: +1
+      env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+    - uses: actions/checkout@v3
+      if: steps.check.outputs.triggered == 'true'
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run all
+
+    - name: Check for changes
+      run: |
+        git add -N .
+        if git diff --exit-code; then
+          echo "changes_exist=false" >> $GITHUB_ENV
+        else
+          echo "changes_exist=true" >> $GITHUB_ENV
+        fi
+
+    - name: Commit and Push
+      uses: stefanzweifel/git-auto-commit-action@v4
+      if: ${{ env.changes_exist == 'true' }}
+      with:
+        commit_message: ':package: (core): update build files'
