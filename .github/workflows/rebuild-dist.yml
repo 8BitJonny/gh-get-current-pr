@@ -16,7 +16,7 @@ jobs:
         trigger: '!build'
         reaction: '+1'
       env:
-          GITHUB_TOKEN: '${{ github.token }}'
+          GITHUB_TOKEN: ${{ secrets.PAT }}
     - uses: actions/checkout@v3
       if: steps.check.outputs.triggered == 'true'
       with:
