@@ -16,9 +16,11 @@ jobs:
         trigger: '!build'
         reaction: '+1'
       env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: '${{ github.token }}'
     - uses: actions/checkout@v3
       if: steps.check.outputs.triggered == 'true'
+      with:
+        token: ${{ secrets.PAT }}
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
