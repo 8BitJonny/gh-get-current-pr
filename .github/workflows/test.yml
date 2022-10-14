@@ -20,6 +20,9 @@ jobs:
           npm test
   test-if-closed-pr-is-found:
     runs-on: ubuntu-latest
+    outputs:
+      implicitOutput: ${{ steps.pr.outputs.PR }}
+      explicitOutput: ${{ steps.pr.outputs.test }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -36,10 +39,36 @@ jobs:
         id: pr
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
+          sha: "9102bf6eb86f652a6c8d31a7d7ccf49c17d7258c"
       - name: Assert PR properties
         run: |
-          [[ ${{ steps.pr.outputs.number }} == 5 ]] || (echo "PR miss match"; exit 1)
+          echo "${{ steps.pr.outputs.PR }}"
+          echo "::set-output name=test::${{ steps.pr.outputs.PR }}"
+          [[ ${{ steps.pr.outputs.number }} == 17 ]] || (echo "PR miss match"; exit 1)
+  downstream_job:
+    needs: test-if-closed-pr-is-found
+    runs-on: ubuntu-latest
+    steps: 
+     - name: Assert PR properties
+       run: |
+          echo "Direct access to step output: ${{ needs.test-if-closed-pr-is-found.outputs.PR }}"
+          echo "Implicit job output: ${{ needs.test-if-closed-pr-is-found.outputs.implicitOutput }}"
+          echo "Explicit job output: ${{ needs.test-if-closed-pr-is-found.outputs.explicitOutput }}"
+          
+     - name: Check If Direct
+       if:  needs.test-if-closed-pr-is-found.outputs.PR != '' && github.event.pull_request.merged == false && github.event.pull_request.closed
+       run: |
+          echo "Falled into if with not explicitly setting job output
+          
+     - name: Check If Implicit
+       if:  needs.test-if-closed-pr-is-found.outputs.implicitOutput != '' && github.event.pull_request.merged == false && github.event.pull_request.closed
+       run: |
+          echo "Falled into if with imlicitely setting job output
+          
+     - name: Check If Explicit
+       if:  needs.test-if-closed-pr-is-found.outputs.explicitOutput != '' && github.event.pull_request.merged == false && github.event.pull_request.closed
+       run: |
+          echo "Falled into if with explicitly setting job output
   test-if-closed-pr-is-not-found-when-filtering-closed-prs:
     runs-on: ubuntu-latest
     steps:
