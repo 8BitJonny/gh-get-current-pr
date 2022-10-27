@@ -90,6 +90,8 @@ See [GitHub Documentation](https://docs.github.com/en/rest/commits/commits#list-
           echo "to ${{ fromJSON(steps.PR.outputs.pr).base.ref }}"
 ```
 
+## Limitations
+
 ### Pull_request trigger
 If you use the `pull_request` event trigger, it won't find the associated PR for the first commit inside that same PR out of the box.
 
@@ -106,6 +108,11 @@ To always find and pass the correct commit SHA to this action use this workflow 
           sha: ${{ github.event.pull_request.head.sha }}
 ```
 This will then work no matter the trigger event and no matter if it is the first PR commit or not.
+
+### Can't find closed, unmerged PRs
+Currently, if you try to find a PR that hasn't been merged yet AND which has been closed, then this app will completely fail in finding that PR. This workflow can only find open PRs, draft PRs and closed+merged PRs.
+
+See https://github.com/8BitJonny/gh-get-current-pr/issues/165 for the progress on this issue as this might come in a later version.
 
 
 ## :computer: Contributing
