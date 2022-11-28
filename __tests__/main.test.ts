@@ -18,8 +18,9 @@ test('prefers PR with commit as head SHA', () => {
 test('filter out draft PRs', () => {
   const testPRs = [createDummyPR(1, {draft: true})]
 
-  const foundPR = getLastPullRequest(testPRs, {draft: false})
-  expect(foundPR).toBeNull()
+  expect(() => {
+    getLastPullRequest(testPRs, {draft: false})
+  }).toThrow("found no PR belonging to the given commit")
 })
 
 test('find a draft PRs', () => {
