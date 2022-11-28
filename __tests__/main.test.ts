@@ -20,7 +20,7 @@ test('filter out draft PRs', () => {
 
   expect(() => {
     getLastPullRequest(testPRs, {draft: false})
-  }).toThrow("found no PR belonging to the given commit")
+  }).toThrow('found no PR belonging to the given commit')
 })
 
 test('find a draft PRs', () => {

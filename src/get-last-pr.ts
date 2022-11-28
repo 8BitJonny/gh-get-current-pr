@@ -25,7 +25,8 @@ export default function getLastPullRequest(
     .filter(({state}) => state === 'open' || !!options.closed)
     .filter(({draft}) => !draft || !!options.draft)
 
-  if (filteredPRs.length === 0) throw new Error("found no PR belonging to the given commit")
+  if (filteredPRs.length === 0)
+    throw new Error('found no PR belonging to the given commit')
 
   const defaultChoice = pullRequests[0]
   const preferredChoice =
