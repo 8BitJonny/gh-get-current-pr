@@ -76,7 +76,7 @@ function getLastPullRequest(pullRequests, options) {
         .filter(({ state }) => state === 'open' || !!options.closed)
         .filter(({ draft }) => !draft || !!options.draft);
     if (filteredPRs.length === 0)
-        return null;
+        throw new Error("found no PR belonging to the given commit");
     const defaultChoice = pullRequests[0];
     const preferredChoice = options.preferWithHeadSha !== undefined
         ? findByHeadSha(pullRequests, options.preferWithHeadSha)
@@ -268,6 +268,9 @@ function main() {
             const { token, sha, filterOutClosed, filterOutDraft } = (0, get_inputs_1.default)();
             const octokit = github.getOctokit(token);
             const allPRs = yield (0, get_prs_associated_with_commit_1.default)(octokit, sha);
+            if (allPRs.length === 0) {
+                throw new Error(`found no PR belonging to the given commit '${sha}'`);
+            }
             const pr = (0, get_last_pr_1.default)(allPRs, {
                 draft: !filterOutDraft,
                 closed: !filterOutClosed,
