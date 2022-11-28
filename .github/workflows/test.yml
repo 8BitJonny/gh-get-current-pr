@@ -55,6 +55,7 @@ jobs:
           npm run package
       - name: Run Action
         uses: ./
+        continue-on-error: true
         id: pr
         with:
           filterOutClosed: true
