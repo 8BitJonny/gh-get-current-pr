@@ -18,14 +18,14 @@ function findByHeadSha(pullRequests: PR[], sha: string): PR | undefined {
 export default function getLastPullRequest(
   pullRequests: PR[],
   options: Options
-): PR | null {
+): PR {
   options = {...Defaults, ...options}
 
   const filteredPRs = pullRequests
     .filter(({state}) => state === 'open' || !!options.closed)
     .filter(({draft}) => !draft || !!options.draft)
 
-  if (filteredPRs.length === 0) return null
+  if (filteredPRs.length === 0) throw new Error("found no PR belonging to the given commit")
 
   const defaultChoice = pullRequests[0]
   const preferredChoice =

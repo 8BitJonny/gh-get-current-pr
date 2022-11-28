@@ -12,6 +12,10 @@ async function main(): Promise<void> {
     const octokit = github.getOctokit(token)
     const allPRs = await getPRsAssociatedWithCommit(octokit, sha)
 
+    if (allPRs.length === 0) {
+      throw new Error(`found no PR belonging to the given commit '${sha}'`)
+    }
+
     const pr = getLastPullRequest(allPRs, {
       draft: !filterOutDraft,
       closed: !filterOutClosed,
