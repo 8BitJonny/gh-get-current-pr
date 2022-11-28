@@ -63,7 +63,7 @@ jobs:
           sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
       - name: Assert failed outcome state
         run: |
-          [[ ${{ steps.PR.outcome }} === 'success' ]] || (echo "PR falsely found"; exit 1)
+          [[ steps.PR.outcome === 'success' ]] || (echo "PR falsely found"; exit 1)
       - name: Assert PR properties
         run: |
           [[ '${{ steps.pr.outputs.number }}' == '' ]] || (echo "PR falsely found"; exit 1)
