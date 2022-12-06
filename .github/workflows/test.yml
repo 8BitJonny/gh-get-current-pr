@@ -43,7 +43,7 @@ jobs:
           # TODO: try and get JSON object with the full PR object working
           # toJSON(fromJSON(...pr)) parses it into memory and then format is with pretty-print.
           prJ: ${{ steps.pr.outputs.pr }}
-          prJSON: ${{ toJSON(fromJSON(steps.current_pr.outputs.pr)) }}
+          prJSON: ${{ toJSON(fromJSON(steps.pr.outputs.pr)) }}
           # Direct access to common PR properties
           prNumber: ${{ steps.pr.outputs.number }}
           prUrl: ${{ steps.pr.outputs.pr_url }}
