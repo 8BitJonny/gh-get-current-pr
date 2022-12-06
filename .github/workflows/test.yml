@@ -37,6 +37,22 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
+      - run: echo "PR ${prNumber} ${prTitle} at ${prUrl}"
+        if: steps.pr.outcome == 'success'
+        env:
+          # TODO: try and get JSON object with the full PR object working
+          # toJSON(fromJSON(...pr)) parses it into memory and then format is with pretty-print.
+          prJ: ${{ steps.pr.outputs.pr }}
+          prJSON: ${{ toJSON(fromJSON(steps.current_pr.outputs.pr)) }}
+          # Direct access to common PR properties
+          prNumber: ${{ steps.pr.outputs.number }}
+          prUrl: ${{ steps.pr.outputs.pr_url }}
+          prTitle: ${{ steps.pr.outputs.pr_title }}
+          prBody: ${{ steps.pr.outputs.pr_body }}
+          prCreatedAt: ${{ steps.pr.outputs.pr_created_at }}
+          prMergedAt: ${{ steps.pr.outputs.pr_merged_at }}
+          prClosedAt: ${{ steps.pr.outputs.pr_closed_at }}
+          prLabel: ${{ steps.pr.outputs.pr_labels }}
       - name: Assert PR properties
         run: |
           [[ ${{ steps.pr.outputs.number }} == 5 ]] || (echo "PR miss match"; exit 1)
@@ -60,21 +76,6 @@ jobs:
           filterOutClosed: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
-      - run: echo "PR ${prNumber} ${prTitle} at ${prUrl}"
-        if: steps.pr.outcome == 'success'
-        env:
-          # TODO: try and get JSON object with the full PR object working
-          # toJSON(fromJSON(...pr)) parses it into memory and then format is with pretty-print.
-          prJSON: ${{ steps.pr.outputs.pr }}
-          # Direct access to common PR properties
-          prNumber: ${{ steps.pr.outputs.number }}
-          prUrl: ${{ steps.pr.outputs.pr_url }}
-          prTitle: ${{ steps.pr.outputs.pr_title }}
-          prBody: ${{ steps.pr.outputs.pr_body }}
-          prCreatedAt: ${{ steps.pr.outputs.pr_created_at }}
-          prMergedAt: ${{ steps.pr.outputs.pr_merged_at }}
-          prClosedAt: ${{ steps.pr.outputs.pr_closed_at }}
-          prLabel: ${{ steps.pr.outputs.pr_labels }}
       - name: Assert PR properties
         run: |
           [[ '${{ steps.pr.outputs.number }}' == '' ]] || (echo "PR falsely found"; exit 1)
