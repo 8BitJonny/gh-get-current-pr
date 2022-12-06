@@ -60,7 +60,8 @@ See [action.yml](action.yml) for more details.
         id: PR
 
       - run: echo "PR ${prNumber} ${prTitle} at ${prUrl} is ${prJSON}"
-        if: steps.PR.outcome == 'success'
+        # 'steps.PR.outcome' reports if the action errors and 'steps.PR.outputs.pr' reports if a PR has been found
+        if: steps.PR.outcome == 'success' && steps.PR.outputs.pr
         env:
           # JSON object with the full PR object
           # toJSON(fromJSON(...pr)) parses it into memory and then format is with pretty-print.
