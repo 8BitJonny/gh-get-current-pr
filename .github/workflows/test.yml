@@ -39,7 +39,8 @@ jobs:
           sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
       - name: Assert PR properties
         run: |
-          [[ ${{ steps.pr.outputs.number }} == 5 ]] || (echo "PR miss match"; exit 1)
+          [[ ${{ steps.pr.outputs.pr_found }} == true ]] || (echo "outputs.pr_found != true"; exit 1)
+          [[ ${{ steps.pr.outputs.number }} == 5 ]] || (echo "outputs.number != 5"; exit 1)
   test-if-closed-pr-is-not-found-when-filtering-closed-prs:
     runs-on: ubuntu-latest
     steps:
@@ -60,6 +61,9 @@ jobs:
           filterOutClosed: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
+      - name: Exit 1, if PR was falsely found
+        if: steps.pr.outputs.pr_found != false
+        run: echo "if 'outputs.pr_found' falsely triggered"; exit 1
       - name: Assert PR properties
         run: |
           [[ '${{ steps.pr.outputs.number }}' == '' ]] || (echo "PR falsely found"; exit 1)
