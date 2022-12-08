@@ -62,7 +62,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           sha: "44b060a85b83f5baf49f523d8a58444ccca52ead"
       - name: Exit 1, if PR was falsely found
-        if: steps.pr.outputs.pr_found != false
+        if: steps.pr.outputs.pr_found != 'false'
         run: echo "if 'outputs.pr_found' falsely triggered"; exit 1
       - name: Assert PR properties
         run: |
