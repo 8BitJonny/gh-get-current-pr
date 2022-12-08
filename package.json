@@ -1,6 +1,6 @@
 {
   "name": "actiongetcurrentpr",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Github Action for getting the current PR if the commit belongs to one",
   "main": "lib/main.js",
   "scripts": {

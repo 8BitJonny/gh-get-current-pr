@@ -16,6 +16,8 @@ inputs:
     description: True, False, 1 or 0 if only non-draft PRs should be returned. Defaults to false.
     required: false
 outputs:
+  pr_found:
+    description: The outcome if a PR has been found. If so, the other outputs are set.
   pr:
     description: The whole PR object if one was found.
   number:

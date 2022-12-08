@@ -198,6 +198,7 @@ function setOutputWithDebug(key, value) {
     core.setOutput(key, value);
 }
 function setOutput(pr) {
+    setOutputWithDebug('pr_found', !!pr);
     if (pr) {
         setOutputWithDebug('number', pr.number.toString());
         setOutputWithDebug('pr', JSON.stringify(pr));

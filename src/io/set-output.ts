@@ -1,12 +1,13 @@
 import * as core from '@actions/core'
 import {PR} from '../types/pull-request'
 
-function setOutputWithDebug(key: string, value: string | null): void {
+function setOutputWithDebug(key: string, value: unknown): void {
   core.debug(`Setting output: key: "${key}", value: "${value}"`)
   core.setOutput(key, value)
 }
 
 export default function setOutput(pr: PR | null): void {
+  setOutputWithDebug('pr_found', !!pr)
   if (pr) {
     setOutputWithDebug('number', pr.number.toString())
     setOutputWithDebug('pr', JSON.stringify(pr))
