@@ -61,7 +61,7 @@ See [action.yml](action.yml) for more details.
 
       - run: echo "PR ${prNumber} ${prTitle} at ${prUrl} is ${prJSON}"
         # 'steps.PR.outcome' reports if the action errors and 'steps.PR.outputs.pr' reports if a PR has been found
-        if: steps.PR.outcome == 'success' && steps.PR.outputs.pr
+        if: steps.PR.outcome == 'success' && steps.PR.outputs.pr_found
         env:
           # JSON object with the full PR object
           # toJSON(fromJSON(...pr)) parses it into memory and then format is with pretty-print.
@@ -86,6 +86,7 @@ See [GitHub Documentation](https://docs.github.com/en/rest/commits/commits#list-
         id: PR
 
       - name: "Pull Request ${{ steps.PR.outputs.number }}"
+        if: steps.PR.outcome == 'success' && steps.PR.outputs.pr_found
         run: |
           echo "from ${{ fromJSON(steps.PR.outputs.pr).head.ref }}"
           echo "to ${{ fromJSON(steps.PR.outputs.pr).base.ref }}"
