@@ -64,6 +64,9 @@ jobs:
       - name: Exit 1, if PR was falsely found
         if: steps.pr.outputs.pr_found != 'false'
         run: echo "if 'outputs.pr_found' falsely triggered"; exit 1
+      - name: Exit 1, if PR was falsely found TEST
+        if: ${{ steps.pr.outputs.pr_found }} != false
+        run: echo "TEST if 'outputs.pr_found' falsely triggered"; exit 1
       - name: Assert PR properties
         run: |
           [[ '${{ steps.pr.outputs.number }}' == '' ]] || (echo "PR falsely found"; exit 1)
