@@ -64,7 +64,7 @@ See [action.yml](action.yml) for more details.
         env:
           # JSON object with the full PR object
           # toJSON(fromJSON(...pr)) parses it into memory and then format is with pretty-print.
-          prJSON: ${{ toJSON(fromJSON(steps.current_pr.outputs.pr)) }}
+          prJSON: ${{ toJSON(fromJSON(steps.PR.outputs.pr)) }}
           # Direct access to common PR properties
           prNumber: ${{ steps.PR.outputs.number }}
           prUrl: ${{ steps.PR.outputs.pr_url }}
