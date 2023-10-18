@@ -1,8 +1,6 @@
 name: Rebuild Dist
 
-on:
-  issue_comment:
-    types: [created]
+on: workflow_dispatch
 
 jobs:
   build:
