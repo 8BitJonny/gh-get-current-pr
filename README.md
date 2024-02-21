@@ -50,6 +50,8 @@ See [action.yml](action.yml) for more details.
           filterOutClosed: true
           # Only return if PR is not in draft state. (By default it returns PRs in any state.)
           filterOutDraft: true
+          # Only return if PR is on same branch as the job is being run on
+          matchBranch: true
 ```
 
 ### Outputs
