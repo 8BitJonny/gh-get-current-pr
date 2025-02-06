@@ -13,7 +13,7 @@ jobs:
         reaction: '+1'
       env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       if: steps.check.outputs.triggered == 'true'
       with:
         token: ${{ secrets.PAT }}
