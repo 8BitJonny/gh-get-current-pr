@@ -34,7 +34,7 @@ jobs:
         fi
 
     - name: Commit and Push
-      uses: stefanzweifel/git-auto-commit-action@v5
+      uses: stefanzweifel/git-auto-commit-action@v6
       if: ${{ env.changes_exist == 'true' }}
       with:
         commit_message: ':package: (core): update build files'
