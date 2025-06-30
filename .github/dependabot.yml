@@ -5,8 +5,7 @@ updates:
     schedule:
       interval: weekly
     groups:
-      gh-actions:
-        dependency-type: "all"
+      gh-actions
 
   - package-ecosystem: npm
     directory: /
