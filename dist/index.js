@@ -151,7 +151,6 @@ function getInputs() {
     const token = core.getInput('github-token', { required: true });
     const triggeredFromPR = github.context.eventName === 'pull_request' ||
         github.context.eventName === 'pull_request_target';
-    console.log(JSON.stringify(github.context.payload));
     const sha = core.getInput('sha') ||
         (triggeredFromPR
             ? (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head.sha
