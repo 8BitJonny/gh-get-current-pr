@@ -4,8 +4,16 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    groups:
+      gh-actions:
+        dependency-type: "all"
 
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
+    groups:
+      prod-dependencies:
+        dependency-type: "production"
+      dev-dependencies:
+        dependency-type: "development"
