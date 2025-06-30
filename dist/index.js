@@ -147,8 +147,14 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const get_input_as_boolean_1 = __importDefault(__nccwpck_require__(8635));
 function getInputs() {
+    var _a;
     const token = core.getInput('github-token', { required: true });
-    const sha = core.getInput('sha') || github.context.sha;
+    const triggeredFromPR = github.context.eventName === 'pull_request' ||
+        github.context.eventName === 'pull_request_target';
+    const sha = core.getInput('sha') ||
+        (triggeredFromPR
+            ? (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.pull_request.head.sha
+            : github.context.sha);
     const filterOutDraft = (0, get_input_as_boolean_1.default)('filterOutDraft');
     const filterOutClosed = (0, get_input_as_boolean_1.default)('filterOutClosed');
     return {
