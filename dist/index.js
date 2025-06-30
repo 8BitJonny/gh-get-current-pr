@@ -153,7 +153,7 @@ function getInputs() {
         github.context.eventName === 'pull_request_target';
     const sha = core.getInput('sha') ||
         (triggeredFromPR
-            ? (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.pull_request.head.sha
+            ? (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head.sha
             : github.context.sha);
     const filterOutDraft = (0, get_input_as_boolean_1.default)('filterOutDraft');
     const filterOutClosed = (0, get_input_as_boolean_1.default)('filterOutClosed');

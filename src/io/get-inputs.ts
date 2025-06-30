@@ -17,7 +17,7 @@ export default function getInputs(): ActionInput {
   const sha =
     core.getInput('sha') ||
     (triggeredFromPR
-      ? github.context.payload.pull_request?.pull_request.head.sha
+      ? github.context.payload.pull_request?.head.sha
       : github.context.sha)
   const filterOutDraft = getInputAsBoolean('filterOutDraft')
   const filterOutClosed = getInputAsBoolean('filterOutClosed')
