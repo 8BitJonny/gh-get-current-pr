@@ -14,6 +14,7 @@ export default function getInputs(): ActionInput {
   const triggeredFromPR =
     github.context.eventName === 'pull_request' ||
     github.context.eventName === 'pull_request_target'
+  console.log(JSON.stringify(github.context.payload))
   const sha =
     core.getInput('sha') ||
     (triggeredFromPR
