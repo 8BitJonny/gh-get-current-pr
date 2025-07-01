@@ -19,14 +19,11 @@ export default async function getPullRequestsAssociatedWithCommits(
   const commit_sha = triggeredFromPR
     ? github.context.payload.pull_request?.head.sha
     : sha
-  core.info(
-    `triggeredFromPR: ${triggeredFromPR}, owner: ${owner}, repo: ${repo}, sha: ${sha}`
-  )
   const result = await octokit.rest.repos.listPullRequestsAssociatedWithCommit({
     owner,
     repo,
     commit_sha
   })
-  core.info(`Used url to fetch associated PRs: ${result.url}`)
+  core.debug(`Used url to fetch associated PRs: ${result.url}`)
   return result.data
 }

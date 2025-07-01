@@ -55,13 +55,12 @@ function getPullRequestsAssociatedWithCommits(octokit, sha) {
         const commit_sha = triggeredFromPR
             ? (_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.head.sha
             : sha;
-        core.info(`triggeredFromPR: ${triggeredFromPR}, owner: ${owner}, repo: ${repo}, sha: ${sha}`);
         const result = yield octokit.rest.repos.listPullRequestsAssociatedWithCommit({
             owner,
             repo,
             commit_sha
         });
-        core.info(`Used url to fetch associated PRs: ${result.url}`);
+        core.debug(`Used url to fetch associated PRs: ${result.url}`);
         return result.data;
     });
 }
