@@ -48,10 +48,10 @@ function getPullRequestsAssociatedWithCommits(octokit, sha) {
             github.context.eventName === 'pull_request_target';
         const result = yield octokit.rest.repos.listPullRequestsAssociatedWithCommit({
             owner: triggeredFromPR
-                ? (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head.owner
+                ? (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head.repo.owner.name
                 : github.context.repo.owner,
             repo: triggeredFromPR
-                ? (_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.head.repo
+                ? (_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.head.repo.name
                 : github.context.repo.repo,
             commit_sha: sha
         });
