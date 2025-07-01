@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const github = __importStar(__nccwpck_require__(5438));
 const core = __importStar(__nccwpck_require__(2186));
 function getPullRequestsAssociatedWithCommits(octokit, sha) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const triggeredFromPR = github.context.eventName === 'pull_request' ||
             github.context.eventName === 'pull_request_target';
@@ -52,11 +52,14 @@ function getPullRequestsAssociatedWithCommits(octokit, sha) {
         const repo = triggeredFromPR
             ? (_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.head.repo.name
             : github.context.repo.repo;
+        const commit_sha = triggeredFromPR
+            ? (_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.head.sha
+            : sha;
         core.info(`triggeredFromPR: ${triggeredFromPR}, owner: ${owner}, repo: ${repo}, sha: ${sha}`);
         const result = yield octokit.rest.repos.listPullRequestsAssociatedWithCommit({
             owner,
             repo,
-            commit_sha: sha
+            commit_sha
         });
         core.info(`Used url to fetch associated PRs: ${result.url}`);
         return result.data;
