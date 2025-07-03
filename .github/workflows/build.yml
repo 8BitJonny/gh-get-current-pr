@@ -30,6 +30,7 @@ jobs:
       - uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: ${{ github.event.pull_request.head.sha }}
   lint:
     runs-on: ubuntu-latest
     steps:
