@@ -44,7 +44,7 @@ See [action.yml](action.yml) for more details.
         with:
           # Authetication token to access GitHub APIs. (Can be omitted by default.)
           github-token: ${{ github.token }}
-          # Verbose setting SHA when using Pull_Request event trigger to fix #16. (For push even trigger this is not necessary.)
+          # For which commit SHA the action should lookup a PR for (By default current commit)
           sha: ${{ github.event.pull_request.head.sha }}
           # Only return if PR is still open. (By default it returns PRs in any state.)
           filterOutClosed: true
@@ -92,23 +92,6 @@ See [GitHub Documentation](https://docs.github.com/en/rest/commits/commits#list-
 ```
 
 ## Limitations
-
-### Pull_request trigger
-If you use the `pull_request` event trigger, it won't find the associated PR for the first commit inside that same PR out of the box.
-
-This [article](https://frontside.com/blog/2020-05-26-github-actions-pull_request/#how-does-pull_request-affect-actionscheckout) describes why this is, in detail.
-A short form of the article's explanation is, that Github creates an extra merge commit before the `pull_request` event is triggered for which this action can't find an assosiated PR. The `pull_request` trigger for the second PR commit and all following, will again work as expected.
-
-#### Workaround
-To always find and pass the correct commit SHA to this action use this workflow config:
-```yml
-    steps:
-      - uses: 8BitJonny/gh-get-current-pr@3.0.0
-        id: PR
-        with:
-          sha: ${{ github.event.pull_request.head.sha }}
-```
-This will then work no matter the trigger event and no matter if it is the first PR commit or not.
 
 ### Can't find closed, unmerged PRs
 Currently, if you try to find a PR that hasn't been merged yet AND which has been closed, then this app will completely fail in finding that PR. This workflow can only find open PRs, draft PRs and closed+merged PRs.
