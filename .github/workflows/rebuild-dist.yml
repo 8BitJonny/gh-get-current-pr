@@ -13,12 +13,12 @@ jobs:
         reaction: '+1'
       env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
       if: steps.check.outputs.triggered == 'true'
       with:
         token: ${{ secrets.PAT }}
     - name: Use Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # 3.9.1
       with:
         node-version: '20'
         cache: 'npm'
@@ -34,7 +34,7 @@ jobs:
         fi
 
     - name: Commit and Push
-      uses: stefanzweifel/git-auto-commit-action@v5
+      uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
       if: ${{ env.changes_exist == 'true' }}
       with:
         commit_message: ':package: (core): update build files'

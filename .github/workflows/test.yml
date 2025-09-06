@@ -10,8 +10,8 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # 3.9.1
         with:
           node-version: '20'
           cache: 'npm'
@@ -21,8 +21,8 @@ jobs:
   test-if-closed-pr-is-found:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # 3.9.1
         with:
           node-version: '20'
           cache: 'npm'
@@ -44,8 +44,8 @@ jobs:
   test-if-closed-pr-is-not-found-when-filtering-closed-prs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # 4.2.2
+      - uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # 3.9.1
         with:
           node-version: '20'
           cache: 'npm'

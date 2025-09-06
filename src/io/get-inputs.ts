@@ -11,7 +11,14 @@ type ActionInput = {
 
 export default function getInputs(): ActionInput {
   const token = core.getInput('github-token', {required: true})
-  const sha = core.getInput('sha') || github.context.sha
+  const triggeredFromPR =
+    github.context.eventName === 'pull_request' ||
+    github.context.eventName === 'pull_request_target'
+  const sha =
+    core.getInput('sha') ||
+    (triggeredFromPR
+      ? github.context.payload.pull_request?.head.sha
+      : github.context.sha)
   const filterOutDraft = getInputAsBoolean('filterOutDraft')
   const filterOutClosed = getInputAsBoolean('filterOutClosed')
   return {
